@@ -1,0 +1,23 @@
+{
+
+  "files": {
+    "sequences": "data/GCF_000328475.2_Umaydis521_2.0_genomic.fna",
+    "annotations": "data/GCF_000328475.2_Umaydis521_2.0_genomic.gff",
+    "save-to"  : "saves/Ustilago_maydis.h5"
+  },
+
+  "genome": {
+    "max-scaffolds-per-batch": 100,
+    "min-scaffold-length": 150,
+    "max-scaffold-length": 8000,
+    "frame-adjustment-ratio": 0.01
+  },
+
+  "training": {
+    "epoch-limit": 2,
+    "learning-rate": 0.0015,
+    "beta_1": 0.93,
+    "beta_2": 0.99
+  }
+
+}
