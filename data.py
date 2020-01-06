@@ -1,7 +1,21 @@
 import numpy as np
+import random
 from Bio import SeqIO
 
 from config import config
+
+available_inputs = ["A", "T", "C", "G", "N"]
+nucleotide_one_hot = np.eye(len(available_inputs))
+
+def nucleotideToOneHot (nucleotide):
+    nucleotide = nucleotide.upper()
+
+    if nucleotide not in available_inputs:
+        nucleotide = "N"
+
+    index = available_inputs.index(nucleotide)
+
+    return list(nucleotide_one_hot[index])
 
 class Genome ():
 
@@ -55,10 +69,6 @@ class Genome ():
     if found_target == False:
       raise ValueError("Invalid target sequence/contig name")
 
-    # Change to one-hot vectors with independent binary predictions
-    available_inputs = ["A", "T", "C", "G", "N"]
-    nucleotide_one_hot = np.eye(len(available_inputs))
-
     target_sequence = str(target_sequence.seq)
     annotation = self.annotations[name]
 
@@ -72,14 +82,9 @@ class Genome ():
       end_at = min(end_at, len(target_sequence))
 
     for i in range(start_at, end_at):
-      nucleotide = target_sequence[i].upper()
 
-      if (nucleotide not in available_inputs):
-        nucleotide = "N"
-
-      index = available_inputs.index(nucleotide)
-
-      nucleotide_vector.append(list(nucleotide_one_hot[index]))
+      one_hot = nucleotideToOneHot(nucleotide)
+      nucleotide_vector.append(list(one_hot))
 
       coordinate = i + 1
 
@@ -150,3 +155,37 @@ class Genome ():
     else:
 
       return contig_frames, annotation_frames
+
+class UnclassifiedGenome ():
+
+    def __init__ (self, input_file):
+
+        self.sequences = list(SeqIO.parse(input_file, "fasta"))
+        self.contigs = [x.name for x in self.sequences]
+
+    def getContig (self, contig=None):
+
+        if contig == None:
+            contig = random.choice(self.contigs)
+
+        found_target = False
+
+        for sequence in self.sequences:
+            if sequence.name == contig:
+                found_target = True
+                break
+
+        if found_target == False:
+            raise ValueError("Invalid target sequence/contig name")
+
+        sequence = str(sequence.seq)
+
+        nucleotide_vector = list()
+        for i in range(len(sequence)):
+            vector = nucleotideToOneHot(sequence[i])
+            nucleotide_vector.append(vector)
+
+        return nucleotide_vector
+
+def vectorToGFF (vector):
+    pass

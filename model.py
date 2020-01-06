@@ -4,7 +4,7 @@ from tensorflow.keras import layers
 from config import config
 training_params = config["training"]
 
-def createModel (output_nodes=None):
+def createModel (output_nodes=None, compile=True):
 
     model = tf.keras.Sequential()
 
@@ -24,6 +24,8 @@ def createModel (output_nodes=None):
     model.summary()
 
     optimiser = tf.keras.optimizers.Adam(learning_rate=training_params["learning-rate"], beta_1=training_params["beta_1"], beta_2=training_params["beta_2"], amsgrad=True)
-    model.compile(loss="binary_crossentropy", optimizer=optimiser, metrics=["mse", "accuracy"])
+
+    if compile:
+        model.compile(loss="binary_crossentropy", optimizer=optimiser, metrics=["mse", "accuracy"])
 
     return model
