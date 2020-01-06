@@ -33,7 +33,7 @@ class Genome ():
     annotation_fields = set([x[2].lower() for x in annotations])
 
     self.contigs = contigs
-    self.annotation_fields = annotation_fields
+    self.annotation_fields = sorted(annotation_fields)
 
     for contig in contigs:
 
@@ -84,6 +84,10 @@ class Genome ():
     else:
       end_at = len(target_sequence)
 
+    # Optimisation
+    last_iterations = [0] * len(self.annotation_fields)
+
+    # Iterate through nucleotide
     for i in range(start_at, end_at):
 
       nucleotide = target_sequence[i]
@@ -99,21 +103,21 @@ class Genome ():
 
       annotations = self.annotations[name]
 
-      last_iteration = 0
-
       for j in range(len(annotation_fields)):
         annotation_field = annotation_fields[j]
-        for k in range(last_iteration, len(annotations[annotation_field])):
+        for k in range(last_iterations[j], len(annotations[annotation_field])):
           positions = annotations[annotation_field][k]
 
+          #print(positions)
+
+          # If within
           if coordinate >= positions[0] and coordinate <= positions[1]:
             annotation[j] = 1
-            last_iteration = max(0, k - 1)
+            last_iterations[j] = max(0, k - 1)
             break
 
           if coordinate > positions[1]:
-            last_iteration = max(0, k - 1)
-            break
+            last_iterations[j] = max(0, k - 1)
 
       annotation_vector.append(annotation)
 
