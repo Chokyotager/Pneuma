@@ -81,7 +81,12 @@ class Genome ():
     if end_at != None:
       end_at = min(end_at, len(target_sequence))
 
+    else:
+      end_at = len(target_sequence)
+
     for i in range(start_at, end_at):
+
+      nucleotide = target_sequence[i]
 
       one_hot = nucleotideToOneHot(nucleotide)
       nucleotide_vector.append(list(one_hot))
@@ -163,7 +168,7 @@ class UnclassifiedGenome ():
         self.sequences = list(SeqIO.parse(input_file, "fasta"))
         self.contigs = [x.name for x in self.sequences]
 
-    def getContig (self, contig=None):
+    def getContig (self, contig=None, start_at=None, end_at=None):
 
         if contig == None:
             contig = random.choice(self.contigs)
@@ -181,11 +186,18 @@ class UnclassifiedGenome ():
         sequence = str(sequence.seq)
 
         nucleotide_vector = list()
-        for i in range(len(sequence)):
+
+        if start_at == None:
+            start_at = 0
+
+        if end_at == None:
+            end_at = len(sequence)
+
+        else:
+            end_at = min(len(sequence), end_at)
+
+        for i in range(start_at, end_at):
             vector = nucleotideToOneHot(sequence[i])
             nucleotide_vector.append(vector)
 
         return nucleotide_vector
-
-def vectorToGFF (vector):
-    pass

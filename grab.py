@@ -1,23 +1,15 @@
+from data import Genome
 import numpy as np
-import tensorflow as tf
-import math
-import random
 
-from config import config
+genome = Genome()
 
-from model import createModel
-from data import UnclassifiedGenome
+key = "NC_026486.1"
 
-# Generate a GFF file from the model output
-genome = UnclassifiedGenome(input_file="data/GCF_000328475.2_Umaydis521_2.0_genomic.fna")
-model = createModel(output_nodes=9)
+nucleotide, annotation = genome.getContig(key, end_at=100000)
+
+threshold = 1
 
 clustering = ["mRNA", "exon", "tRNA", "gene", "rRNA", "sequence_feature", "CDS", "region", "gap"]
-annotations = dict()
-
-model.load_weights(config["files"]["save-to"])
-
-threshold = 0.7
 
 def computeNucleotideScores (vector):
 
@@ -48,32 +40,15 @@ def computeNucleotideScores (vector):
 
     return contiguous_coordinates
 
+annotation = np.swapaxes(annotation, 0, 1)
+annotations = dict()
+
+for i in range(len(clustering)):
+    cluster = clustering[i]
+    annotations[cluster] = computeNucleotideScores(annotation[i])
+
 all_annotations = dict()
-
-# Evaluate
-for contig in genome.contigs:
-
-    print(genome.contigs)
-
-    contig = "NC_026486.1"
-
-    print("Evaluating contig: {}".format(contig))
-
-    sequence = genome.getContig(contig, end_at=100000)
-
-    output_vector = model.predict([sequence])[0]
-    output_vector = np.swapaxes(output_vector, 0, 1)
-
-    annotations = dict()
-    for i in range(len(clustering)):
-        cluster = clustering[i]
-        annotations[cluster] = computeNucleotideScores(output_vector[i])
-
-    all_annotations[contig] = annotations
-
-    break
-
-# Generate annotations
+all_annotations[key] = annotations
 
 gff_annotations = list()
 id_numeral = 0
@@ -91,4 +66,4 @@ for sequence in all_annotations.keys():
             gff_annotations.append(data)
             id_numeral += 1
 
-open("test/evaluated.gff", "w+").write("\n".join(gff_annotations))
+open("test/ground_truth.gff", "w+").write("\n".join(gff_annotations))

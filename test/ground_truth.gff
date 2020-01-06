@@ -1,0 +1,5 @@
+NC_026486.1	Pneuma	mRNA	333	333	1.0	.	.	ID=0;
+NC_026486.1	Pneuma	exon	1	100000	1.0	.	.	ID=1;
+NC_026486.1	Pneuma	tRNA	333	333	1.0	.	.	ID=2;
+NC_026486.1	Pneuma	CDS	333	333	1.0	.	.	ID=3;
+NC_026486.1	Pneuma	region	333	333	1.0	.	.	ID=4;

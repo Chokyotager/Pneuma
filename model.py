@@ -14,10 +14,10 @@ def createModel (output_nodes=None, compile=True):
     model.add(layers.Input(batch_shape=[None, None, 5]))
 
     for i in range(gru_size[1]):
-      model.add(layers.GRU(gru_size[0], return_sequences=True, activation="relu", recurrent_activation="tanh", stateful=False))
+      model.add(layers.GRU(gru_size[0], return_sequences=True, reset_after=True, activation="selu", recurrent_activation="tanh", stateful=False))
 
     for i in range(ff_size[1]):
-      model.add(layers.Dense(ff_size[0], activation="relu"))
+      model.add(layers.Dense(ff_size[0], activation="selu"))
 
     model.add(layers.Dense(output_nodes, activation="sigmoid"))
 
