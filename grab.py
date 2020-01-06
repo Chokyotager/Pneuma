@@ -3,13 +3,14 @@ import numpy as np
 
 genome = Genome()
 
-key = "NC_026486.1"
+key = "CM004307.1"
 
 nucleotide, annotation = genome.getContig(key, end_at=100000)
 
 threshold = 1
 
-clustering = ["mRNA", "exon", "tRNA", "gene", "rRNA", "sequence_feature", "CDS", "region", "gap"]
+clustering = list(genome.annotation_fields)
+print(clustering)
 
 def computeNucleotideScores (vector):
 

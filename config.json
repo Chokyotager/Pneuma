@@ -1,9 +1,9 @@
 {
 
   "files": {
-    "sequences": "data/GCF_000328475.2_Umaydis521_2.0_genomic.fna",
-    "annotations": "data/GCF_000328475.2_Umaydis521_2.0_genomic.gff",
-    "save-to"  : "saves/Ustilago_maydis.h5"
+    "sequences": "data/GCA_001634645.1_GLBRCY22-3_genomic.fna",
+    "annotations": "data/GCA_001634645.1_GLBRCY22-3_genomic.gff",
+    "save-to"  : "saves/Saccharomyces_cerevisiae.h5"
   },
 
   "genome": {
@@ -14,7 +14,7 @@
   },
 
   "training": {
-    "epoch-limit": 2,
+    "epoch-limit": 50,
     "learning-rate": 0.0015,
     "beta_1": 0.93,
     "beta_2": 0.99

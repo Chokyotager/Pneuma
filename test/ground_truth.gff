@@ -1,5 +1,9 @@
-NC_026486.1	Pneuma	mRNA	333	333	1.0	.	.	ID=0;
-NC_026486.1	Pneuma	exon	1	100000	1.0	.	.	ID=1;
-NC_026486.1	Pneuma	tRNA	333	333	1.0	.	.	ID=2;
-NC_026486.1	Pneuma	CDS	333	333	1.0	.	.	ID=3;
-NC_026486.1	Pneuma	region	333	333	1.0	.	.	ID=4;
+CM004307.1	Pneuma	trna	90083	90083	1.0	.	.	ID=0;
+CM004307.1	Pneuma	exon	2031	2031	1.0	.	.	ID=1;
+CM004307.1	Pneuma	region	1	100000	1.0	.	.	ID=2;
+CM004307.1	Pneuma	snorna	83052	83052	1.0	.	.	ID=3;
+CM004307.1	Pneuma	sequence_feature	22291	22291	1.0	.	.	ID=4;
+CM004307.1	Pneuma	mrna	2031	2031	1.0	.	.	ID=5;
+CM004307.1	Pneuma	gene	2031	2031	1.0	.	.	ID=6;
+CM004307.1	Pneuma	cds	2031	2031	1.0	.	.	ID=7;
+CM004307.1	Pneuma	pseudogene	865	865	1.0	.	.	ID=8;
