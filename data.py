@@ -97,21 +97,22 @@ class Genome ():
       annotation = [0] * len(self.annotation_fields)
       annotation_fields = list(self.annotation_fields)
 
-      annotations = self.annotations
+      annotations = self.annotations[name]
+
+      last_iteration = 0
 
       for j in range(len(annotation_fields)):
         annotation_field = annotation_fields[j]
-        for k in range(len(annotations[name][annotation_field])):
-
-          positions = annotations[name][annotation_field][k]
+        for k in range(last_iteration, len(annotations[annotation_field])):
+          positions = annotations[annotation_field][k]
 
           if coordinate >= positions[0] and coordinate <= positions[1]:
             annotation[j] = 1
-            annotations[name][annotation_field] = annotations[name][annotation_field][k - 1:]
+            last_iteration = max(0, k - 1)
             break
 
           if coordinate > positions[1]:
-            annotations[name][annotation_field] = annotations[name][annotation_field][k - 1:]
+            last_iteration = max(0, k - 1)
             break
 
       annotation_vector.append(annotation)
