@@ -13,6 +13,8 @@ genome = UnclassifiedGenome(input_file="data/GCF_000328475.2_Umaydis521_2.0_geno
 model = createModel(output_nodes=14)
 
 clustering = ['transcript', 'centromere', 'trna', 'exon', 'region', 'snorna', 'sequence_feature', 'ncrna', 'mrna', 'gene', 'snrna', 'rrna', 'cds', 'pseudogene']
+clustering = sorted(clustering)
+
 annotations = dict()
 
 model.load_weights(config["files"]["save-to"])
