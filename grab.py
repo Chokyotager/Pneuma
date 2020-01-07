@@ -3,11 +3,12 @@ import numpy as np
 
 genome = Genome()
 
-key = "CM004307.1"
+key = "CM004294.1"
 
 nucleotide, annotation = genome.getContig(key, end_at=100000)
 
 threshold = 1
+minimum_basepairs = 0
 
 clustering = list(genome.annotation_fields)
 print(clustering)
@@ -35,14 +36,20 @@ def computeNucleotideScores (vector):
                 latest_contig = i
 
     # Normalise contiguous scores
+    qc_coordinates = list()
     for contigs in contiguous_coordinates:
         contigs[2] = sum(contigs[2])/(contigs[1] - contigs[0] + 1)
 
+        if (contigs[1] - contigs[0] + 1) >= minimum_basepairs:
+            qc_coordinates.append(contigs)
 
-    return contiguous_coordinates
+
+    return qc_coordinates
 
 annotation = np.swapaxes(annotation, 0, 1)
 annotations = dict()
+
+print(annotation)
 
 for i in range(len(clustering)):
     cluster = clustering[i]
