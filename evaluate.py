@@ -19,7 +19,8 @@ annotations = dict()
 
 model.load_weights(config["files"]["save-to"])
 
-threshold = 0.7
+threshold = 0.9
+minimum_basepairs = 5
 
 def computeNucleotideScores (vector):
 
@@ -44,11 +45,15 @@ def computeNucleotideScores (vector):
                 latest_contig = i
 
     # Normalise contiguous scores
+    qc_coordinates = list()
     for contigs in contiguous_coordinates:
         contigs[2] = sum(contigs[2])/(contigs[1] - contigs[0] + 1)
 
+        if (contigs[1] - contigs[0] + 1) >= minimum_basepairs:
+            qc_coordinates.append(contigs)
 
-    return contiguous_coordinates
+
+    return qc_coordinates
 
 all_annotations = dict()
 
