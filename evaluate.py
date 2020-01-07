@@ -19,7 +19,7 @@ annotations = dict()
 
 model.load_weights(config["files"]["save-to"])
 
-threshold = 0.9
+threshold = 0.5
 minimum_basepairs = 5
 
 def computeNucleotideScores (vector):
