@@ -3,7 +3,8 @@
   "files": {
     "sequences": "data/GCA_001634645.1_GLBRCY22-3_genomic.fna",
     "annotations": "data/GCA_001634645.1_GLBRCY22-3_genomic.gff",
-    "save-to"  : "saves/Saccharomyces_cerevisiae.h5"
+    "save-to"  : "saves/Saccharomyces_cerevisiae.h5",
+    "evaluate": "private/"
   },
 
   "genome": {
@@ -18,6 +19,11 @@
     "learning-rate": 0.0015,
     "beta_1": 0.93,
     "beta_2": 0.99
+  },
+
+  "evaluation": {
+    "threshold": 0.8,
+    "minimum-basepairs": 10
   }
 
 }

@@ -9,7 +9,7 @@ from model import createModel
 from data import UnclassifiedGenome
 
 # Generate a GFF file from the model output
-genome = UnclassifiedGenome(input_file="data/GCF_000328475.2_Umaydis521_2.0_genomic.fna")
+genome = UnclassifiedGenome(input_file=config["files"]["evaluate"])
 model = createModel(output_nodes=14)
 
 clustering = ['transcript', 'centromere', 'trna', 'exon', 'region', 'snorna', 'sequence_feature', 'ncrna', 'mrna', 'gene', 'snrna', 'rrna', 'cds', 'pseudogene']
@@ -19,8 +19,8 @@ annotations = dict()
 
 model.load_weights(config["files"]["save-to"])
 
-threshold = 0.5
-minimum_basepairs = 5
+threshold = config["evaluation"]["threshold"]
+minimum_basepairs = config["evaluation"]["minimum-basepairs"]
 
 def computeNucleotideScores (vector):
 
@@ -74,8 +74,6 @@ for contig in genome.contigs:
 
     all_annotations[contig] = annotations
 
-    break
-
 # Generate annotations
 
 gff_annotations = list()
@@ -97,7 +95,7 @@ for sequence in all_annotations.keys():
             id_numeral += 1
 
 def sortNumerically (element):
-    return int(element[4])
+    return [element[0], int(element[4])]
 
 all_data.sort(key=sortNumerically)
 
