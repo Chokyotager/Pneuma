@@ -60,10 +60,6 @@ all_annotations = dict()
 # Evaluate
 for contig in genome.contigs:
 
-    print(genome.contigs)
-
-    contig = "NC_026486.1"
-
     print("Evaluating contig: {}".format(contig))
 
     sequence = genome.getContig(contig, end_at=100000)
@@ -84,6 +80,9 @@ for contig in genome.contigs:
 
 gff_annotations = list()
 id_numeral = 0
+
+all_data = list()
+
 for sequence in all_annotations.keys():
 
     sequence_annotations = all_annotations[sequence]
@@ -94,8 +93,17 @@ for sequence in all_annotations.keys():
 
         for annotation in annotations:
 
-            data = "\t".join([sequence, "Pneuma", cluster, str(annotation[0]), str(annotation[1]), str(annotation[2]), ".", ".", "ID={};".format(id_numeral)])
-            gff_annotations.append(data)
+            all_data.append([sequence, "Pneuma", cluster, str(annotation[0]), str(annotation[1]), str(annotation[2]), ".", ".", "ID={};".format(id_numeral)])
             id_numeral += 1
+
+def sortNumerically (element):
+    return int(element[4])
+
+all_data.sort(key=sortNumerically)
+
+for datapoint in all_data:
+
+    data = "\t".join(datapoint)
+    gff_annotations.append(data)
 
 open("test/evaluated.gff", "w+").write("\n".join(gff_annotations))
